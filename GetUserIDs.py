@@ -32,8 +32,11 @@ class listener(StreamListener):
 
             with open(filename, "a") as out_file:
                 out_file.write(userID+"\n")
+            global userIDsGathered
             userIDsGathered += 1
-            print(str(userIDsGathered))
+            print(str(userIDsGathered)) #printing output takes a long time in python - altenatively print every MOD 100 users analysed 
+            #if userIDsGathered % 100 = 0:
+            #   print(str(userIDsGathered))
             return True
         
         except:
