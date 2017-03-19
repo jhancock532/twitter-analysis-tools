@@ -21,6 +21,7 @@ api.wait_on_rate_limit=True;
 
 tweetCount = 100 #set how many tweets you wish to analyse per username
 
+#For my study I counted how many months users accounts had existed on Twitter.
 now = datetime.datetime.now()
 currentDate = str(now)
 currentYear = int(currentDate[0:4])
@@ -29,6 +30,7 @@ currentMonth = int(currentDate[5:7])
 conn = sqlite3.connect('databaseName.db') 
 c = conn.cursor()
 
+# I admit that the following create table method looks like something from a nightmare -  
 def create_table():
     c.execute('CREATE TABLE IF NOT EXISTS twitterData(username TEXT, gender TEXT, followerCount INTEGER, friendCount INTEGER, accountAge INTEGER, statusCount INTEGER, listCount INTEGER, retweetCount INTEGER, quoteCount INTEGER, repliesCount INTEGER, emojiCount INTEGER, positiveEmojiCount INTEGER, passiveEmojiCount INTEGER, negativeEmojiCount INTEGER, emoticonCount INTEGER, positiveEmoticonCount INTEGER, negativeEmoticonCount INTEGER, positiveTweetCount INTEGER, negativeTweetCount INTEGER, overallSentiment REAL, totalFavouritedCount INTEGER, totalRetweetedCount INTEGER, totalMentionedCount INTEGER, hashtagCount INTEGER, URLCount INTEGER, mediaCount INTEGER, questionCount INTEGER, exclaimCount INTEGER, fullStopCount INTEGER, commaCount INTEGER, hypenCount INTEGER, quotationMarkCount INTEGER, apostropheCount INTEGER, colonCount INTEGER, semicolonCount INTEGER, averageWordLength REAL, averageTweetLength REAL, capitalLetterCount INTEGER, lowerLetterCount INTEGER, firstPersonCount INTEGER, secondPersonCount INTEGER, thirdPersonCount INTEGER, saidRetweetCount INTEGER, saidFollowCount INTEGER, punctuationCount INTEGER)')
 
@@ -66,13 +68,14 @@ regexNegativeEmoticons = r">:\[| :-\(| :\(| :-c| :c| :-<| :C| :<| :-\[| :\[| :\{
 s_upper=frozenset(["E", "T", "A", "O", "I", "N", "S", "R", "H", "D", "L", "U", "C", "M", "F", "Y", "W", "G", "P", "B", "V", "K", "X", "Q", "J", "Z"] )
 s_lower=frozenset(["e", "t", "a", "o", "i", "n", "s", "t", "h", "d", "l", "u", "c", "m", "f", "y", "w", "g", "p", "b", "v", "k", "x", "q", "j", "z"])
 
-regexFirst = r" I | we | me | us | my | our | mine | ours |We |My |Our |Ours"
+#if you want to search for specific words, create the regex below, copy paste a regex search, create a counter variable, and update the database format.
+regexFirst = r"I | we | me | us | my | our | mine | ours |We |My |Our |Ours"
 regexRetweet = r"RT|Retweet|retweet"
 regexFollow = r"follow|Follow"
 regexSecond = r" you | your | yours |You |Your "
 regexThird = r" he | they | him | them | his | her | their | she | hers | theirs |They" 
 
-userList = [line.rstrip('\n') for line in open('usernames.txt')]
+userList = [line.rstrip('\n') for line in open('userIDs.txt')]
 userCount = 0 #This is the position in the usernames list which you have analysed to previously.
 del userList[:userCount] #If the program crashes, skip past all the usernames already analysed with this.
 
@@ -244,13 +247,13 @@ for user in userList:
                 m = re.findall(regexPositiveEmoticons, tweet)
                 positiveEmoticonCount += len(m)
                 emoticonCount += len(m)
-                tweetSentiment += len(m) * 0.2
+                #tweetSentiment += len(m) * 0.2 #decide for yourself how you value the sentiment of positive or negative emojis
 
             if re.search(regexNegativeEmoticons, tweet):
                 m = re.findall(regexNegativeEmoticons, tweet)
                 negativeEmoticonCount += len(m)
                 emoticonCount += len(m)
-                tweetSentiment += len(m) * -0.2
+                #tweetSentiment += len(m) * -0.2
 
             #  -- Emoji, DingBat Finder --
             emoji_pattern = re.compile('[\U0001F300-\U0001F64F]')    #standard emoji character boundaries 
@@ -269,10 +272,10 @@ for user in userList:
 
                 if resultDingbat in positiveEmojiSubjectSet:
                     positiveEmojiCount += 1
-                    tweetSentiment += 0.2
+                    #tweetSentiment += 0.2
                 elif resultDingbat in negativeEmojiSubjectSet:
                     negativeEmojiCount += 1
-                    tweetSentiment -= 0.2
+                    #tweetSentiment -= 0.2
                 else:
                     passiveEmojiCount += 1
                         
@@ -284,10 +287,10 @@ for user in userList:
                 resultEmoji = rawEmojiValue[1:-1] #this code gets rid of the quotes ' ' surrounding the value
                 if resultEmoji in positiveEmojiSubjectSet:
                     positiveEmojiCount = positiveEmojiCount + 1
-                    tweetSentiment += 0.2
+                    #tweetSentiment += 0.2
                 elif resultEmoji in negativeEmojiSubjectSet:
                     negativeEmojiCount = negativeEmojiCount + 1
-                    tweetSentiment -= 0.2
+                    #tweetSentiment -= 0.2
                 else:
                     passiveEmojiCount = passiveEmojiCount + 1
                         
@@ -363,7 +366,7 @@ for user in userList:
                 iterMonth = 1
                 iterYear = iterYear + 1
 
-        ### ---- Data Saving ---- ###                                                                                                                                                               urlCount INTEGER, mediaCount INTEGER, hashtagCount INTEGER, symbolCount#12 INTEGER, punctuationCount INTEGER, questionCount INTEGER, exclaimCount INTEGER, ellipsisCount INTEGER, ampCount INTEGER, semicolonCount INTEGER, colonCount INTEGER, #12thirdPersonCount INTEGER, secondPersonCount INTEGER, firstPersonCount INTEGER, averageTextLength#5 REAL, averageTweetLength REAL, longWordCount INTEGER, averageWordLength INTEGER
+        ### ---- Data Saving ---- ### 
         c.execute("INSERT INTO twitterData (username, gender, followerCount, friendCount, accountAge, statusCount, listCount, retweetCount, quoteCount, repliesCount, emojiCount, positiveEmojiCount, passiveEmojiCount, negativeEmojiCount, emoticonCount, positiveEmoticonCount, negativeEmoticonCount, positiveTweetCount, negativeTweetCount, overallSentiment, totalFavouritedCount, totalRetweetedCount, totalMentionedCount, hashtagCount, URLCount, mediaCount, questionCount, exclaimCount,fullStopCount, commaCount, hypenCount, quotationMarkCount, apostropheCount, colonCount, semicolonCount, averageWordLength, averageTweetLength, capitalLetterCount, lowerLetterCount, firstPersonCount, secondPersonCount, thirdPersonCount, saidRetweetCount, saidFollowCount, punctuationCount ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                                         (username, userGender, followerCount, friendCount, accountAge, statusCount, listCount, retweetCount, quoteCount, totalRepliesCount, emojiCount, positiveEmojiCount, passiveEmojiCount, negativeEmojiCount, emoticonCount, positiveEmoticonCount, negativeEmoticonCount, positiveTweetCount, negativeTweetCount, overallSentiment, totalFavouritedCount, totalRetweetedCount, totalMentionedCount, hashtagCount, URLCount, mediaCount, questionCount, exclaimCount,fullStopCount, commaCount, hypenCount, quotationMarkCount, apostropheCount, colonCount, semicolonCount, averageWordLength, averageTweetLength, capitalLetterCount, lowerLetterCount, firstCount, secondCount, thirdCount, saidRetweetCount, saidFollowCount, punctuationCount))
         conn.commit()
