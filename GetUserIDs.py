@@ -1,4 +1,5 @@
 import sys, time, tweepy, json
+from random import randint
 from tweepy import Stream
 from tweepy import OAuthHandler
 from tweepy.streaming import StreamListener
@@ -13,9 +14,9 @@ auth = OAuthHandler(ckey, csecret)
 auth.set_access_token(atoken, asecret)
 api = tweepy.API(auth)
 
-usernameList = []
-filename = "usernames.txt"
-usernamesGathered = 0
+userIDList = []
+filename = "userIDs.txt"
+userIDsGathered = 0
 
 class listener(StreamListener):
     
@@ -23,12 +24,16 @@ class listener(StreamListener):
         try:
             object = json.loads(data)
 
-            username = object["user"]["screen_name"]
+            #username = object["user"]["screen_name"] #screen names can be edited!
+            userId = object["user"]["id_str"] #userID is therefore safer
+            #time.sleep(randint(0,2)) #this will make your sample more random as you increase the 2 to a higher number.
+            #it will also take a longer time to process users. Because of the rate of tweeting of the UK (multiple tweets per second),
+            #you could possibly get away with just using time.sleep(0.2), and if you have a bad internet connection no time.sleep whatsoever.
 
-            with open("usernamesExtra.txt", "a") as out_file:
-                out_file.write(username+"\n")
-            usernamesGathered += 1
-            print(str(usernamesGathered))
+            with open(filename, "a") as out_file:
+                out_file.write(userID+"\n")
+            userIDsGathered += 1
+            print(str(userIDsGathered))
             return True
         
         except:
