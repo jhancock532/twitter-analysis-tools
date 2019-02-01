@@ -1,4 +1,11 @@
 # twitter-analysis-tools
+
+I presented the results of this project at Sentinus Young Innovators 2016 and the Big Bang Fair 2017, you can find me giving [an interview on the project on YouTube](https://www.youtube.com/watch?v=SlvfOR2nXEQ). In Sentinus Young Innovators I was awarded the University of Ulster ICT Award and tickets to the Big Bang Fair, where I won a Runner's Up Prize in the Senior Engineering catergory. After the competition, I was invited to represent the UK at the International Youth Talent forum, having been commended by the Institute of Technology.
+
+Sadly, with new Twitter API regulations, a project using this technology is no longer viable.
+*James Hancock, 2019*
+
+### Old readme.md - 2017
 A selection of tools to gather data from Twitter (for free!). Coded in python, made with love.
 
 <i>You will need to get a Twitter Dev account and get an application set up for your secrets and tokens. Without the variables ckey, csecret, atoken and asecret assigned correctly the code will not work. I have imported the libraries genderGuesser and textBlob to handle some of the data analysis, if you want store gender and perform sentiment analysis you shall have to do the same or hack an alternative. </i>
