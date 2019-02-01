@@ -1,6 +1,6 @@
 # twitter-analysis-tools
 
-I presented the results of this project at Sentinus Young Innovators 2016 and the Big Bang Fair 2017, you can find me giving [an interview on the project on YouTube](https://www.youtube.com/watch?v=SlvfOR2nXEQ). In Sentinus Young Innovators I was awarded the University of Ulster ICT Award and tickets to the Big Bang Fair, where I won a Runner's Up Prize in the Senior Engineering catergory. After the competition, I was invited to represent the UK at the International Youth Talent forum, having been commended by the Institute of Technology.
+I presented the results of this project at Sentinus Young Innovators 2016 and the Big Bang Fair 2017, you can find me giving [an interview on the project on YouTube](https://www.youtube.com/watch?v=SlvfOR2nXEQ). In Sentinus Young Innovators I was awarded the University of Ulster ICT Award and tickets to the Big Bang Fair, where I won a Runner's Up Prize in the Senior Engineering catergory. After the competition, I was invited to represent the UK at the [International Swiss Talent Forum](https://sjf.ch/international-swiss-talent-forum/), having been commended by the Institute of Technology.
 
 Sadly, with new Twitter API regulations, a project using this technology is no longer viable.
 *James Hancock, 2019*
